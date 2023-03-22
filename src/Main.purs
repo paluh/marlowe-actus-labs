@@ -96,7 +96,7 @@ main configJson = do
     contractStream <- do
       let
         reqInterval = RequestInterval (Milliseconds 50.0)
-        pollInterval = PollingInterval (Milliseconds 10_000.0)
+        pollInterval = PollingInterval (Milliseconds 60_000.0)
         isActus { resource: Runtime.ContractHeader { metadata: Runtime.Metadata md } } = do
           isJust $ Map.lookup actusMetadataKey md
       Streaming.mkContractsWithTransactions pollInterval reqInterval isActus config.marloweWebServerUrl

@@ -178,6 +178,7 @@ createMerkleized contractData serverUrl contractsEndpoint = do
           , changeAddress: changeAddress
           , addresses: usedAddresses <> [ changeAddress ]
           , collateralUTxOs: []
+          , tags: {}
           }
 
       post' serverUrl contractsEndpoint req
@@ -204,6 +205,7 @@ create contractData serverUrl contractsEndpoint = do
       , changeAddress: changeAddress
       , addresses: usedAddresses <> [ changeAddress ]
       , collateralUTxOs: []
+      , tags: {}
       }
 
   post' serverUrl contractsEndpoint req

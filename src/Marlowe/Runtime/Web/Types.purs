@@ -427,6 +427,7 @@ newtype PostContractsRequest = PostContractsRequest
   , changeAddress :: Bech32
   , addresses :: Array Bech32
   , collateralUTxOs :: Array TxOutRef
+  , tags :: {}
   }
 
 instance EncodeJsonBody PostContractsRequest where
@@ -436,6 +437,7 @@ instance EncodeJsonBody PostContractsRequest where
     , roles: Nothing :: Maybe String
     , contract: r.contract
     , minUTxODeposit: r.minUTxODeposit
+    , tags: r.tags
     }
 
 type PostContractsHeadersRow =
@@ -513,6 +515,7 @@ newtype PostTransactionsRequest = PostTransactionsRequest
   , changeAddress :: Bech32
   , addresses :: Array Bech32
   , collateralUTxOs :: Array TxOutRef
+  , tags :: {}
   }
 
 instance EncodeJsonBody PostTransactionsRequest where
@@ -522,6 +525,7 @@ instance EncodeJsonBody PostTransactionsRequest where
     , invalidHereafter: ISO r.invalidHereafter
     , metadata: r.metadata
     , version: V1
+    , tags: r.tags
     }
 
 type PostTransactionsRequestRow =

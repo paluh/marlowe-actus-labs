@@ -42,6 +42,7 @@ import Debug (traceM)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Now (nowDateTime)
+import JS.Unsafe.Stringify (unsafeStringify)
 import Language.Marlowe.Core.V1.Semantics.Types (Case(..), Contract(..), Input(..), InputContent(..), Party, Token)
 import Language.Marlowe.Core.V1.Semantics.Types as V1
 import Marlowe.Actus (genContract')
@@ -50,8 +51,8 @@ import Marlowe.Runtime.Web.Client (merkleize, put')
 import Marlowe.Runtime.Web.Types (PostMerkleizationRequest(..), PostMerkleizationResponse(..), PostTransactionsRequest(..), PostTransactionsResponse(..), PutTransactionRequest(..), Runtime(..), ServerURL, TextEnvelope(..), TransactionEndpoint, TransactionsEndpoint, toTextEnvelope)
 import Marlowe.Runtime.Web.Types as Runtime
 import React.Basic (fragment) as DOOM
-import React.Basic.DOM (input, text) as DOOM
 import React.Basic.DOM (text)
+import React.Basic.DOM as DOOM
 import React.Basic.DOM as R
 import React.Basic.DOM.Simplified.Generated as DOM
 import React.Basic.Events (handler_)
@@ -175,6 +176,7 @@ mkEventList = do
                       , changeAddress
                       , addresses
                       , collateralUTxOs
+                      , tags: {}
                       }
 
                   post' runtime.serverURL transactionsEndpoint req
@@ -354,7 +356,8 @@ mkEventList = do
                                 ActusParty -> contractInfo.party
                                 ActusCounterParty -> contractInfo.counterParty
                               item = DOM.tr {}
-                                [ DOM.td {} [ text $ cf.contractId ]
+                                [ DOM.td {}
+                                  [ text $ cf.contractId ]
                                 , tdCentered [ text $ foldMap show $ map (un Runtime.BlockNumber <<< _.blockNo <<< un Runtime.BlockHeader) $ ContractInfo.createdAt ci ]
                                 , tdCentered [ text $ Actus.BussinessEvents.description cf.event ]
                                 , tdCentered [ foldMap text $ hush (formatDateTime "YYYY-DD-MM HH:mm:ss" cf.paymentDay) ]
